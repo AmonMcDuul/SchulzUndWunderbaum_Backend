@@ -1,4 +1,4 @@
-namespace SchulzUndWunderbaum_Backend
+namespace SchulzUndWunderbaum_Backend.Models
 {
     public class WeatherForecast
     {

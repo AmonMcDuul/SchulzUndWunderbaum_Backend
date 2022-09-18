@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using SchulzUndWunderbaum_Backend.Models;
 
 namespace SchulzUndWunderbaum_Backend.Controllers
-{  
+{
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
