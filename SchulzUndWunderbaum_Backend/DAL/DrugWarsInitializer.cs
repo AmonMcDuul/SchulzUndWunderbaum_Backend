@@ -6,8 +6,8 @@ namespace SchulzUndWunderbaum_Backend.DAL
     {
         public static void Initialize(DrugWarsContext context)
         {
-            // Look for any students.
-            if (context.Player.Any())
+            // Look for any players.
+            if (context.Players.Any())
             {
                 return;   // DB has been seeded
             }
@@ -17,7 +17,8 @@ namespace SchulzUndWunderbaum_Backend.DAL
             new Player{Name="Carson", GameMode=30, CreationDate=DateTime.Now},
             new Player{Name="Jan-Willem", GameMode=30, CreationDate=DateTime.Now},
             };
-
+            context.Players.AddRange(players);
+            context.SaveChanges();
 
             var highScores = new List<HighScore>
             {
@@ -26,6 +27,15 @@ namespace SchulzUndWunderbaum_Backend.DAL
 
             };
             context.HighScores.AddRange(highScores);
+            context.SaveChanges();
+
+            var drugs = new List<Drug>
+            {
+            new Drug{Name="Weed", Description="Weed description", BasePrice=5},
+            new Drug{Name="Hash", Description="Hash description", BasePrice=6},
+
+            };
+            context.Drugs.AddRange(drugs);
             context.SaveChanges();
         }
     }

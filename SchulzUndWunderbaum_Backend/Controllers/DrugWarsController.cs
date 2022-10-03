@@ -25,14 +25,14 @@ namespace SchulzUndWunderbaum_Backend.Controllers
         [HttpGet("Player")]
         public async Task<ActionResult<IEnumerable<Player>>> GetPlayer()
         {
-            return await _context.Player.ToListAsync();
+            return await _context.Players.ToListAsync();
         }
 
         // GET: api/DrugWars/5
         [HttpGet("Player/{id}")]
         public async Task<ActionResult<Player>> GetPlayer(int id)
         {
-            var player = await _context.Player.FindAsync(id);
+            var player = await _context.Players.FindAsync(id);
 
             if (player == null)
             {
@@ -78,7 +78,7 @@ namespace SchulzUndWunderbaum_Backend.Controllers
         [HttpPost("Player")]
         public async Task<ActionResult<Player>> PostPlayer(Player player)
         {
-            _context.Player.Add(player);
+            _context.Players.Add(player);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPlayer", new { id = player.Id }, player);
@@ -88,13 +88,13 @@ namespace SchulzUndWunderbaum_Backend.Controllers
         [HttpDelete("Player/{id}")]
         public async Task<IActionResult> DeletePlayer(int id)
         {
-            var player = await _context.Player.FindAsync(id);
+            var player = await _context.Players.FindAsync(id);
             if (player == null)
             {
                 return NotFound();
             }
 
-            _context.Player.Remove(player);
+            _context.Players.Remove(player);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace SchulzUndWunderbaum_Backend.Controllers
 
         private bool PlayerExists(int id)
         {
-            return _context.Player.Any(e => e.Id == id);
+            return _context.Players.Any(e => e.Id == id);
         }
 
         // GET: api/HighScores
@@ -165,7 +165,7 @@ namespace SchulzUndWunderbaum_Backend.Controllers
             _context.HighScores.Add(highScore);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetHighScore", new { id = highScore.ID }, highScore);
+            return CreatedAtAction("GetHighScore", new { id = highScore.Id }, highScore);
         }
 
         //// DELETE: api/HighScores/5
@@ -186,7 +186,13 @@ namespace SchulzUndWunderbaum_Backend.Controllers
 
         private bool HighScoreExists(int id)
         {
-            return _context.HighScores.Any(e => e.ID == id);
+            return _context.HighScores.Any(e => e.Id == id);
+        }
+
+        [HttpGet("Drugs")]
+        public async Task<ActionResult<IEnumerable<Drug>>> GetDrugs()
+        {
+            return await _context.Drugs.ToListAsync();
         }
 
     }

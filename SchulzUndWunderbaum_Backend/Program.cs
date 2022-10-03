@@ -46,7 +46,6 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<DrugWarsContext>();
     context.Database.EnsureCreated();
     DrugWarsInitializer.Initialize(context);
-
 }
 
 
