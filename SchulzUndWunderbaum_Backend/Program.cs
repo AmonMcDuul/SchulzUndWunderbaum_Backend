@@ -1,3 +1,6 @@
+using SchulzUndWunderbaum_Backend.DAL;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
@@ -15,6 +18,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Connection string to database
+builder.Services.AddDbContext<DrugWarsContext>(options =>
+  options.UseSqlServer(builder.Configuration.GetConnectionString("DrugWarsContext")));
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 var app = builder.Build();
 
 
@@ -24,6 +33,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<DrugWarsContext>();
+    context.Database.EnsureCreated();
+    DrugWarsInitializer.Initialize(context);
+
+}
+
 
 app.UseHttpsRedirection();
 
